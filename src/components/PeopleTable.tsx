@@ -1,7 +1,7 @@
 import React from 'react';
-import { Person } from '../types';
 import { useLocation } from 'react-router-dom';
 import classNames from 'classnames';
+import { Person } from '../types';
 import { PersonLink } from './PersonLink';
 
 type Props = {
@@ -10,7 +10,8 @@ type Props = {
 
 export const PeopleTable: React.FC<Props> = ({ people }) => {
   const location = useLocation();
-  const currentSlug = location.pathname.split('/').pop();
+  const currentSlug =
+    location.pathname.split('/').filter(Boolean).pop() || '';
 
   return (
     <table
@@ -27,6 +28,7 @@ export const PeopleTable: React.FC<Props> = ({ people }) => {
           <th>Father</th>
         </tr>
       </thead>
+
       <tbody>
         {people.map(person => {
           const mother = people.find(p => p.name === person.motherName);
@@ -43,23 +45,14 @@ export const PeopleTable: React.FC<Props> = ({ people }) => {
               <td>
                 <PersonLink person={person} />
               </td>
-
               <td>{person.sex}</td>
               <td>{person.born}</td>
               <td>{person.died}</td>
               <td>
-                {mother ? (
-                  <PersonLink person={mother} />
-                ) : (
-                  person.motherName || '-'
-                )}
+                {mother ? <PersonLink person={mother} /> : person.motherName || '-'}
               </td>
               <td>
-                {father ? (
-                  <PersonLink person={father} />
-                ) : (
-                  person.fatherName || '-'
-                )}
+                {father ? <PersonLink person={father} /> : person.fatherName || '-'}
               </td>
             </tr>
           );
