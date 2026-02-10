@@ -13,7 +13,7 @@ export const PeoplePage = () => {
     setIsLoading(true);
 
     getPeople()
-      .then(loadedPeople => {
+      .then((loadedPeople) => {
         setPeople(loadedPeople);
         setHasError(false);
       })
@@ -40,7 +40,9 @@ export const PeoplePage = () => {
           )}
 
           {!isLoading && !hasError && people.length === 0 && (
-            <p data-cy="noPeopleMessage">There are no people on the server</p>
+            <p data-cy="noPeopleMessage">
+              There are no people on the server
+            </p>
           )}
 
           {!isLoading && !hasError && people.length > 0 && (
